@@ -1,4 +1,10 @@
-﻿<Application
+﻿<!--
+  Copyright 2024 generic-name-2166
+  
+  SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Application
   x:Class="Verdict.App"
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"

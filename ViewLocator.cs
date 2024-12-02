@@ -1,3 +1,9 @@
+/*
+Copyright 2024 generic-name-2166
+
+SPDX-License-Identifier: CC0-1.0
+*/
+
 using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;

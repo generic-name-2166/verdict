@@ -1,4 +1,10 @@
-﻿<Window
+﻿<!--
+  Copyright 2024 generic-name-2166
+  
+  SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<Window
   x:Class="Verdict.Views.MainWindow"
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,7 +15,7 @@
   d:DesignHeight="450"
   d:DesignWidth="800"
   x:DataType="vm:MainWindowViewModel"
-  Icon="/Assets/avalonia-logo.ico"
+  Icon="/Assets/verdict-logo.ico"
   mc:Ignorable="d">
 
   <Design.DataContext>
