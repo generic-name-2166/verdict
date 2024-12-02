@@ -1,5 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using Verdict.Models;
+using Verdict.Services;
 
 namespace Verdict.ViewModels;
 
@@ -47,5 +49,10 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         if (CurrentItemIndex > 0)
             CurrentItemIndex--;
+    }
+
+    public async Task SaveVerdicts()
+    {
+        await JsonService.Write(_verdicts);
     }
 }
