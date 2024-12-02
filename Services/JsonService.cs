@@ -1,10 +1,16 @@
 using System;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Verdict.Models;
 
 namespace Verdict.Services;
+
+[JsonSourceGenerationOptions(WriteIndented = false)]
+[JsonSerializable(typeof(TextItem[]))]
+[JsonSerializable(typeof(bool?[]))]
+internal partial class SourceGenerationContext : JsonSerializerContext { }
 
 public static class JsonService
 {
@@ -17,7 +23,7 @@ public static class JsonService
 
     private static bool FilterExceptions(Exception ex)
     {
-        return ex is FileNotFoundException;
+        return ex is FileNotFoundException or JsonException;
     }
 
     public static async Task<TextItem[]> Read()
@@ -25,7 +31,10 @@ public static class JsonService
         try
         {
             await using var stream = new FileStream(Input, FileMode.Open);
-            return await JsonSerializer.DeserializeAsync<TextItem[]>(stream) ?? [];
+            return await JsonSerializer.DeserializeAsync<TextItem[]>(
+                    stream,
+                    SourceGenerationContext.Default.TextItemArray
+                ) ?? [];
         }
         catch (Exception ex) when (FilterExceptions(ex))
         {
@@ -36,6 +45,10 @@ public static class JsonService
     public static async Task Write(bool?[] items)
     {
         await using var stream = new FileStream(Output, FileMode.Create);
-        await JsonSerializer.SerializeAsync(stream, items);
+        await JsonSerializer.SerializeAsync(
+            stream,
+            items,
+            SourceGenerationContext.Default.NullableBooleanArray
+        );
     }
 }
