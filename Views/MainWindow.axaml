@@ -20,15 +20,31 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <ItemsControl ItemsSource="{Binding Items}">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate DataType="vm:TextItemViewModel">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="{Binding Text}" />
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
-
+    <StackPanel>
+        <TextBlock
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Classes="h1"
+            Text="{Binding CurrentItem.Text}" />
+        <Grid HorizontalAlignment="Center" ColumnDefinitions="Auto, Auto, Auto">
+            <Button
+                Grid.Column="0"
+                Classes="button"
+                Command="{Binding RegisterYesItem}">
+                Yes
+            </Button>
+            <Button
+                Grid.Column="1"
+                Classes="button"
+                Command="{Binding RegisterNoItem}">
+                No
+            </Button>
+            <Button
+                Grid.Column="2"
+                Classes="button"
+                Command="{Binding RegisterPreviousItem}">
+                Go back
+            </Button>
+        </Grid>
+    </StackPanel>
 </Window>

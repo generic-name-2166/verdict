@@ -12,5 +12,13 @@
 
     <Application.Styles>
         <FluentTheme />
+
+        <Style Selector="TextBlock.h1">
+            <Setter Property="FontSize" Value="60" />
+        </Style>
+
+        <Style Selector="Button.button">
+            <Setter Property="FontSize" Value="32" />
+        </Style>
     </Application.Styles>
 </Application>
