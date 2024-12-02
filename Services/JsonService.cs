@@ -9,6 +9,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Avalonia.Platform.Storage;
 using Verdict.Models;
 
 namespace Verdict.Services;
@@ -20,27 +21,42 @@ internal partial class SourceGenerationContext : JsonSerializerContext { }
 
 public static class JsonService
 {
-    private static readonly string Input = Path.Combine(Environment.CurrentDirectory, "data.json");
-
-    private static readonly string Output = Path.Combine(
-        Environment.CurrentDirectory,
-        "verdict.json"
-    );
-
     private static bool FilterExceptions(Exception ex)
     {
+        Console.WriteLine(ex.Message);
         return ex is FileNotFoundException or JsonException;
     }
 
-    public static async Task<TextItem[]> Read()
+    private static readonly FilePickerFileType JsonFileType = new("JSON")
     {
+        Patterns = ["*.json"],
+        AppleUniformTypeIdentifiers = ["public.json"],
+        MimeTypes = ["application/json"],
+    };
+
+    public static async Task<TextItem[]> Read(IStorageProvider provider)
+    {
+        var files = await provider.OpenFilePickerAsync(
+            new FilePickerOpenOptions()
+            {
+                Title = "Open JSON File",
+                AllowMultiple = false,
+                FileTypeFilter = [JsonFileType],
+            }
+        );
+
+        if (files.Count < 1)
+            return [];
+        var input = files[0];
         try
         {
-            await using var stream = new FileStream(Input, FileMode.Open);
-            return await JsonSerializer.DeserializeAsync<TextItem[]>(
+            await using var stream = await input.OpenReadAsync();
+            var items =
+                await JsonSerializer.DeserializeAsync<TextItem[]>(
                     stream,
                     SourceGenerationContext.Default.TextItemArray
                 ) ?? [];
+            return items;
         }
         catch (Exception ex) when (FilterExceptions(ex))
         {
@@ -48,9 +64,15 @@ public static class JsonService
         }
     }
 
-    public static async Task Write(bool?[] items)
+    public static async Task Write(IStorageProvider provider, bool?[] items)
     {
-        await using var stream = new FileStream(Output, FileMode.Create);
+        var file = await provider.SaveFilePickerAsync(
+            new FilePickerSaveOptions() { Title = "Save JSON File", DefaultExtension = ".json" }
+        );
+        if (file is null)
+            return;
+
+        await using var stream = await file.OpenWriteAsync();
         await JsonSerializer.SerializeAsync(
             stream,
             items,

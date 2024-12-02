@@ -30,7 +30,7 @@
     <Menu DockPanel.Dock="Top">
       <MenuItem Header="_File">
         <!--  The underscores automatically create hotkeys  -->
-        <MenuItem Header="_Open" />
+        <MenuItem Command="{Binding LoadData}" Header="_Open" />
         <MenuItem Command="{Binding SaveVerdicts}" Header="_Save" />
       </MenuItem>
     </Menu>

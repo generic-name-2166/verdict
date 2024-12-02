@@ -8,5 +8,9 @@ namespace Verdict.Models;
 
 public class TextItem(string text)
 {
-    public readonly string Text = text;
+    public string Text { get; set; } = text;
+
+    // JSON deserializer needs a constructor with no arguments and a setter on all the properties
+    public TextItem()
+        : this(string.Empty) { }
 }
