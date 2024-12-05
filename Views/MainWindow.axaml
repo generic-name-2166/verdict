@@ -36,6 +36,9 @@
         VerticalAlignment="Center"
         Classes="h1"
         Text="{Binding CurrentItem.Text}" />
+
+      <Image Source="{Binding Testing}" Width="64" />
+
       <Grid HorizontalAlignment="Center" ColumnDefinitions="Auto, Auto, Auto">
         <Button
           Grid.Column="0"

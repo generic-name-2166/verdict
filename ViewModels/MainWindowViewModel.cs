@@ -6,10 +6,13 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Verdict.Models;
 using Verdict.Services;
@@ -95,4 +98,7 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     public MenuBarViewModel MenuBarVm { get; set; }
+
+    public Bitmap Testing { get; set; } =
+        Bitmap.DecodeToWidth(File.OpenRead(@"E:\Tech\c-projects\Verdict\idk\Untitled.png"), 64);
 }
