@@ -1,4 +1,10 @@
-﻿<UserControl
+﻿<!--
+  Copyright 2024 generic-name-2166
+  
+  SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<UserControl
   x:Class="Verdict.Controls.MenuBarControl"
   xmlns="https://github.com/avaloniaui"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
