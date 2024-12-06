@@ -13,7 +13,7 @@
   xmlns:vm="using:Verdict.ViewModels"
   d:DesignHeight="450"
   d:DesignWidth="800"
-  x:DataType="vm:MainWindowViewModel"
+  x:DataType="vm:MenuBarViewModel"
   mc:Ignorable="d">
 
   <Menu>

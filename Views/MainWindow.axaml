@@ -28,7 +28,7 @@
   </Design.DataContext>
 
   <DockPanel>
-    <controls:MenuBarControl DockPanel.Dock="Top" />
+    <controls:MenuBarControl DataContext="{Binding MenuBarVm}" DockPanel.Dock="Top" />
 
     <StackPanel>
       <TextBlock

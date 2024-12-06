@@ -21,6 +21,7 @@ public partial class MainWindowViewModel : ViewModelBase
     public MainWindowViewModel()
     {
         (_items, _verdicts) = SetItems([new TextItem("Item 1"), new TextItem("Item 2")]);
+        MenuBarVm = new MenuBarViewModel(LoadData, SaveVerdicts);
     }
 
     private List<TextItemViewModel> _items;
@@ -63,7 +64,7 @@ public partial class MainWindowViewModel : ViewModelBase
             CurrentItemIndex--;
     }
 
-    public async Task SaveVerdicts()
+    private async Task SaveVerdicts()
     {
         // To hell with good MVVM practices
         // magical `GetService` is completely unclear
@@ -77,7 +78,7 @@ public partial class MainWindowViewModel : ViewModelBase
         await JsonService.Write(provider, _verdicts);
     }
 
-    public async Task LoadData()
+    private async Task LoadData()
     {
         // To hell with good MVVM practices
         // magical `GetService` is completely unclear
@@ -92,4 +93,6 @@ public partial class MainWindowViewModel : ViewModelBase
         (_items, _verdicts) = SetItems(data);
         CurrentItemIndex = 0;
     }
+
+    public MenuBarViewModel MenuBarVm { get; set; }
 }
