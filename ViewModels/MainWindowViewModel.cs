@@ -6,13 +6,10 @@ SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Verdict.Models;
 using Verdict.Services;
@@ -27,21 +24,31 @@ public partial class MainWindowViewModel : ViewModelBase
         MenuBarVm = new MenuBarViewModel(LoadData, SaveVerdicts);
     }
 
-    private List<TextItemViewModel> _items;
+    private List<IItemModelViewModel> _items;
     private bool?[] _verdicts;
 
     // Initializes to a default value of 0
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(CurrentItem))]
+    [NotifyPropertyChangedFor(nameof(CurrentItemModel))]
     private int _currentItemIndex;
 
-    private static (List<TextItemViewModel>, bool?[]) SetItems(TextItem[] items)
+    private static IItemModelViewModel? ConvertModels(ItemModel item)
     {
-        var viewModels = items.ToList().ConvertAll(item => new TextItemViewModel(item));
+        return item switch
+        {
+            TextItem textItem => new TextItemViewModel(textItem),
+            ImageItem imageItem => new ImageItemViewModel(imageItem),
+            _ => null,
+        };
+    }
+
+    private static (List<IItemModelViewModel>, bool?[]) SetItems(List<ItemModel> items)
+    {
+        var viewModels = items.ConvertAll(ConvertModels).OfType<IItemModelViewModel>().ToList();
         return (viewModels, new bool?[viewModels.Count]);
     }
 
-    public TextItemViewModel CurrentItem => _items[CurrentItemIndex];
+    public IItemModelViewModel CurrentItemModel => _items[CurrentItemIndex];
 
     private void RegisterNextItem()
     {
@@ -98,7 +105,4 @@ public partial class MainWindowViewModel : ViewModelBase
     }
 
     public MenuBarViewModel MenuBarVm { get; set; }
-
-    public Bitmap Testing { get; set; } =
-        Bitmap.DecodeToWidth(File.OpenRead(@"E:\Tech\c-projects\Verdict\idk\Untitled.png"), 64);
 }

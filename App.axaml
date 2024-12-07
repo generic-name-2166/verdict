@@ -23,6 +23,10 @@
       <Setter Property="FontSize" Value="60" />
     </Style>
 
+    <Style Selector="TextBlock.h2">
+      <Setter Property="FontSize" Value="48" />
+    </Style>
+
     <Style Selector="Button.button">
       <Setter Property="FontSize" Value="32" />
     </Style>

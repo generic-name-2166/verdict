@@ -31,13 +31,7 @@
     <controls:MenuBarControl DataContext="{Binding MenuBarVm}" DockPanel.Dock="Top" />
 
     <StackPanel>
-      <TextBlock
-        HorizontalAlignment="Center"
-        VerticalAlignment="Center"
-        Classes="h1"
-        Text="{Binding CurrentItem.Text}" />
-
-      <Image Source="{Binding Testing}" Width="64" />
+      <controls:ItemControl DataContext="{Binding CurrentItemModel}" />
 
       <Grid HorizontalAlignment="Center" ColumnDefinitions="Auto, Auto, Auto">
         <Button

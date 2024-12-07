@@ -22,6 +22,9 @@
       <MenuItem Command="{Binding LoadData}" Header="_Open" />
       <MenuItem Command="{Binding SaveVerdicts}" Header="_Save" />
     </MenuItem>
+    <MenuItem Header="_Tools">
+      <MenuItem Command="{Binding AggregateImageFolder}" Header="Image folder" />
+    </MenuItem>
   </Menu>
 
 </UserControl>

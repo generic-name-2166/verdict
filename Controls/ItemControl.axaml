@@ -1,0 +1,37 @@
+﻿<!--
+  Copyright 2024 generic-name-2166
+  
+  SPDX-License-Identifier: AGPL-3.0-or-later
+-->
+
+<UserControl
+  x:Class="Verdict.Controls.ItemControl"
+  xmlns="https://github.com/avaloniaui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:vm="using:Verdict.ViewModels"
+  d:DesignHeight="450"
+  d:DesignWidth="800"
+  x:DataType="vm:IItemModelViewModel"
+  mc:Ignorable="d">
+
+  <UserControl.DataTemplates>
+    <DataTemplate DataType="{x:Type vm:TextItemViewModel}">
+      <TextBlock
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Classes="h1"
+        Text="{Binding Text}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:ImageItemViewModel}">
+      <StackPanel HorizontalAlignment="Center">
+        <Image Width="{Binding Width}" Source="{Binding ImageBitmap}" />
+        <TextBlock Classes="h2" Text="{Binding Name}" />
+      </StackPanel>
+    </DataTemplate>
+  </UserControl.DataTemplates>
+
+  <ContentControl Content="{Binding .}" />
+</UserControl>
