@@ -102,6 +102,7 @@ public partial class MainWindowViewModel : ViewModelBase
         var data = await JsonService.Read(provider);
         (_items, _verdicts) = SetItems(data);
         CurrentItemIndex = 0;
+        OnPropertyChanged(nameof(CurrentItemModel));
     }
 
     public MenuBarViewModel MenuBarVm { get; set; }
